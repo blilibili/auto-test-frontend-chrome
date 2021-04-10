@@ -1,0 +1,33 @@
+.add-plan-form{
+    padding: 15px;
+}
+
+.add-plan-title{
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+.add-button-png{
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+}
+.line{
+    text-align: center;
+}
+
+.change-test-type{
+    margin-bottom: 15px;
+}
+
+.del-font{
+    font-size: 28px;
+    position: relative;
+    top: 4px;
+    left: 15px;
+    cursor: pointer;
+}
+.tips-words{
+    padding: 8px 0;
+    color: #909399;
+}

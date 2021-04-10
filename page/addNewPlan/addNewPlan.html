@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>新增方案</title>
+    <link rel="stylesheet" href="../../lib/element.css">
+    <link rel="stylesheet" href="./addNewPlan.css">
+</head>
+<body>
+    <div id="app">
+        <div class="add-plan-form">
+            <div class="add-plan-title">新增测试方案</div>
+            <el-row>
+                <el-col :span="3">
+                    <el-radio-group v-model="checkTestType" @change="changeTestTypeMethods" class="change-test-type">
+                        <el-radio-button label="0">前端选择器</el-radio-button>
+                        <el-radio-button label="1">顺序选择</el-radio-button>
+                    </el-radio-group>
+                </el-col>
+                <el-col :span="4">
+                    <el-button type="primary" @click="openInsertButtonModal">插入按钮事件</el-button>
+                </el-col>
+            </el-row>
+            <el-form ref="form" :model="testPlanModel" label-position="left" label-width="120px">
+                <template v-if="checkTestType === '0'">
+                    <el-form-item label="方案名称">
+                        <el-input v-model="testPlanModel.planName"></el-input>
+                    </el-form-item>
+
+                    <el-form-item label="测试地址">
+                        <el-input v-model="testPlanModel.website"></el-input>
+                    </el-form-item>
+
+                    <template v-for="(item, index) in testModule">
+                        <el-form-item label="前端选择器-值" v-if="item.type !== 'click'">
+                            <el-col :span="4">
+                                <el-select v-model="item.type" placeholder="请选择">
+                                    <el-option
+                                            v-for="item in [{label: 'id选择器', value: 'id'}, {label: 'class选择器', value: 'class'}]"
+                                            :key="item.value"
+                                            :label="item.label"
+                                            :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </el-col>
+                            <el-col :span="4">
+                                <el-input style="width: 220px;" v-model="item.typeValue" placeholder="请输入节点名称"></el-input>
+                            </el-col>
+                            <el-col :span="4">
+                                <el-input style="width: 220px;" v-model="item.content" placeholder="请输入节点值"></el-input>
+                            </el-col>
+                        </el-form-item>
+
+                        <el-form-item label="按钮名称" v-if="item.type === 'click'">
+                            <span>{{item.name}}</span>
+                        </el-form-item>
+                    </template>
+                    <el-form-item>
+                        <img @click="addNewTestModule" src="../../assets/popup/add-button.png" class="add-button-png" alt="">
+                    </el-form-item>
+                </template>
+
+                <template v-else-if="checkTestType === '1'">
+                    <el-form-item label="方案名称">
+                        <el-input v-model="testPlanModel.planName"></el-input>
+                    </el-form-item>
+
+                    <el-form-item label="测试地址">
+                        <el-input v-model="testPlanModel.website"></el-input>
+                    </el-form-item>
+
+                    <el-form-item label="设置目标class">
+                        <el-input v-model="targetDom"></el-input>
+                        <div class="tips-words">可设置包裹input的dom class 缩小返回，可提高匹配精准度，若为空，则默认找所有的input</div>
+                    </el-form-item>
+
+                    <template v-for="(item, index) in testModule">
+                        <el-form-item :label="`第${index+1}个输入框`" v-if="item.type !== 'click'">
+                            <el-col :span="3">
+                                <el-input style="width: 220px;" v-model="item.inputValue" placeholder="请输入输入框值"></el-input>
+                            </el-col>
+                            <el-col :span="4">
+                                <div class="el-icon-circle-close del-font" @click="delModuleHandler(index)"></div>
+                            </el-col>
+                        </el-form-item>
+
+                        <el-form-item label="按钮名称" v-if="item.type === 'click'">
+                            <span>{{item.name}}</span>
+                        </el-form-item>
+                    </template>
+
+                    <el-form-item>
+                        <img @click="addNewTestInputModule" src="../../assets/popup/add-button.png" class="add-button-png" alt="">
+                    </el-form-item>
+                </template>
+
+                <el-form-item>
+                    <el-button type="primary" @click="saveTestPlan">保存方案</el-button>
+                </el-form-item>
+            </el-form>
+
+        </div>
+
+        <el-dialog
+                title="提示"
+                :visible.sync="isShowAddButtonModal"
+                width="25%"
+        >
+            <div class="tips-words">tips:根据按钮名称匹配对应的按钮，请填写正确的名称</div>
+            <el-form ref="form" :model="buttonObj" label-position="left" label-width="80px">
+                <el-form-item label="按钮名称">
+                    <el-input v-model="buttonObj.name"></el-input>
+                </el-form-item>
+<!--                <el-form-item label="按钮事件">-->
+<!--                    {{buttonObj.type}}-->
+<!--                </el-form-item>-->
+            </el-form>
+
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="closeShowAddButtonMethods">取 消</el-button>
+                <el-button type="primary" @click="saveButtonClick">确 定</el-button>
+            </span>
+        </el-dialog>
+    </div>
+    <script src="../../lib/vue.js"></script>
+    <script src="../../lib/element.js"></script>
+    <script src="./addNewPlan.js"></script>
+</body>
+</html>

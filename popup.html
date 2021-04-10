@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <link rel="stylesheet" href="./popup.css">
+</head>
+<body>
+<div id="app">
+    <div class="test-plan-panel">
+        <template v-for="(item, index) in testModuleList">
+            <div class="add-button-block" @click="startTest">
+                <img src="./assets/popup/start-test-button.png" class="add-button-png" alt="">
+                <div>{{item.planName}}</div>
+            </div>
+        </template>
+        <div class="add-button-block" @click="addNewPlan">
+            <img src="./assets/popup/add-button.png" class="add-button-png" alt="">
+            <div>添加方案</div>
+        </div>
+        <div class="add-button-block" @click="updatePlanList">
+            <img src="./assets/popup/update-button.png" class="add-button-png" alt="">
+            <div>更新</div>
+        </div>
+        <div class="add-button-block" @click="clearPlanList">
+            <img src="./assets/popup/clear-button.png" class="add-button-png" alt="">
+            <div>清空</div>
+        </div>
+    </div>
+</div>
+<script src="./lib/vue.js"></script>
+<script src="./entry.js"></script>
+</body>
+</html>
