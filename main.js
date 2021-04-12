@@ -16,19 +16,18 @@ function startCode() {
             if(item.type === 'id') {
               dom = document.getElementById(item.typeValue)
             }
-            setValue(dom, item.content)
+            setValue(dom, item.content, currentWebsiteObj)
           })
         } else if(currentWebsiteObj.checkTestType === '1') {
           const testSetValueList = currentWebsiteObj.testModule
           const targetDom = currentWebsiteObj.targetDom.indexOf('.') !==-1 ?currentWebsiteObj.targetDom: `.${currentWebsiteObj.targetDom}`
           const targetClassDom = currentWebsiteObj.targetDom !== ''?`${targetDom} input`: 'input'
-          console.log(targetClassDom)
           const inputList = $(targetClassDom)
           // 所有值赋值完 开始处理按钮点击事件
           for(let i = 0;i < inputList.length;i++) {
             const dom = inputList[i]
-            console.log(typeof parseInt(testSetValueList[i].inputValue, 10))
-            setValue(dom, parseInt(testSetValueList[i].inputValue, 10), currentWebsiteObj)
+            // @params dom  插入值  当前测试大对象  当前输入框类型  当前输入框位置
+            setValue(dom, testSetValueList[i].inputValue, currentWebsiteObj, testSetValueList[i].type, i)
           }
         }
         const buttonList = currentWebsiteObj.testModule.filter((result) => {
@@ -45,21 +44,28 @@ function startCode() {
     });
 }
 
-function setValue(dom, value, currentWebsiteObj) {
-  const testDom = dom
-  const evt = new InputEvent('input', {
-    inputType: 'insertText',
-    data: value,
-    dataTransfer: null,
-    isComposing: false
-  });
-  testDom.value = value
-  testDom.dispatchEvent(evt);
-  testDom.click()
-  const targetDom = currentWebsiteObj.targetDom.indexOf('.') !==-1 ?currentWebsiteObj.targetDom: `.${currentWebsiteObj.targetDom}`
+function setValue(dom, value, currentWebsiteObj, inputType='', inputIndex='') {
+  try{
+    const testDom = dom
+    if(currentWebsiteObj.checkTestType === '0' || (currentWebsiteObj.checkTestType === '1' && inputType === 'default')) {
+      const evt = new InputEvent('input', {
+        inputType: 'insertText',
+        data: value,
+        dataTransfer: null,
+        isComposing: false
+      });
+      testDom.value = value
+      testDom.dispatchEvent(evt);
+    } else if (currentWebsiteObj.checkTestType === '1' && inputType === 'select') {
+      testDom.click()
+      const targetDom = currentWebsiteObj.targetDom.indexOf('.') !== -1 ?currentWebsiteObj.targetDom: `.${currentWebsiteObj.targetDom}`
 
-  console.log('dom', targetDom, `${targetDom} .el-select-dropdown__list`)
-  $(`${targetDom} .el-select-dropdown__list`).find('li')[0].click()
+      const ulDom = $(`${targetDom} .el-select-dropdown__list`)
+      $(ulDom[inputIndex]).find('li')[parseInt(value, 10)].click()
+    }
+  } catch (e) {
+    console.warn('异常: ', e)
+  }
 }
 
 // 查找页面中 登录的按钮

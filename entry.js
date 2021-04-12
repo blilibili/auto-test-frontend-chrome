@@ -22,7 +22,6 @@ var app = new Vue({
       chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
         chrome.tabs.sendMessage(tabs[0].id, {message: {
             direct: 'startTest',
-            test: '123',
             moduleList: this.testModuleList
           }}, function(response) {// popup直接给contentscript发消息
 

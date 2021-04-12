@@ -15,6 +15,7 @@ var app = new Vue({
       },
       // 顺序匹配输入框
       testInputObj: {
+        type: 'default',
         inputValue: ''
       },
       checkTestType: '0',
