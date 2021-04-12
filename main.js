@@ -27,7 +27,9 @@ function startCode() {
           for(let i = 0;i < inputList.length;i++) {
             const dom = inputList[i]
             // @params dom  插入值  当前测试大对象  当前输入框类型  当前输入框位置
-            setValue(dom, testSetValueList[i].inputValue, currentWebsiteObj, testSetValueList[i].type, i)
+            if(testSetValueList[i]) {
+              setValue(dom, testSetValueList[i].inputValue, currentWebsiteObj, testSetValueList[i].type, i)
+            }
           }
         }
         const buttonList = currentWebsiteObj.testModule.filter((result) => {
@@ -36,6 +38,7 @@ function startCode() {
 
         buttonList.forEach((item) => {
           const findList = findLoginButton(item.name)
+          console.log('找到按钮列表', findList, item)
           findList.forEach((childItem) => {
             childItem.click()
           })
