@@ -86,8 +86,13 @@
                                     </el-option>
                                 </el-select>
                             </el-col>
-                            <el-col :span="3">
-                                <el-input style="width: 220px;" v-model="item.inputValue" placeholder="请输入输入框值"></el-input>
+                            <span style="display: inline-block;margin: 0 15px;width: 1px;height: 1px;"></span>
+                            <el-col :span="4">
+                                <el-input
+                                        style="width: 260px;"
+                                        v-model="item.inputValue"
+                                        :placeholder="item.type === 'default'?'请输入输入框值': '请输入选中第几个（务必输入数字）'"
+                                ></el-input>
                             </el-col>
                             <el-col :span="4">
                                 <div class="el-icon-circle-close del-font" @click="delModuleHandler(index)"></div>

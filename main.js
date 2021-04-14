@@ -38,7 +38,6 @@ function startCode() {
 
         buttonList.forEach((item) => {
           const findList = findLoginButton(item.name)
-          console.log('找到按钮列表', findList, item)
           findList.forEach((childItem) => {
             childItem.click()
           })

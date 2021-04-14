@@ -12,6 +12,13 @@ var app = new Vue({
     addNewPlan() {
       window.open('page/addNewPlan/addNewPlan.html')
     },
+    delTestPlanByIndex(index) {
+      this.testModuleList.splice(index, 1)
+      // 保存到浏览器缓存
+      chrome.runtime.sendMessage({direct: 'saveTestPlan', data: this.testModuleList}, function(response) {
+        alert('删除成功')
+      });
+    },
     updatePlanList() {
       chrome.storage.local.get('testModel', (result) => {
         this.testModuleList = result.testModel? JSON.parse(result.testModel): []

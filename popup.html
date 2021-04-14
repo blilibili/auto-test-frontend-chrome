@@ -12,16 +12,18 @@
             <div class="add-button-block" @click="startTest">
                 <img src="./assets/popup/start-test-button.png" class="add-button-png" alt="">
                 <div>{{item.planName}}</div>
+                <div>（{{item.checkTestType == '0'?'前端选择器': '顺序匹配'}}）</div>
+                <img @click="delTestPlanByIndex(index)" src="./assets/popup/close-button.png" class="close-button" alt="">
             </div>
         </template>
         <div class="add-button-block" @click="addNewPlan">
             <img src="./assets/popup/add-button.png" class="add-button-png" alt="">
             <div>添加方案</div>
         </div>
-        <div class="add-button-block" @click="updatePlanList">
-            <img src="./assets/popup/update-button.png" class="add-button-png" alt="">
-            <div>更新</div>
-        </div>
+<!--        <div class="add-button-block" @click="updatePlanList">-->
+<!--            <img src="./assets/popup/update-button.png" class="add-button-png" alt="">-->
+<!--            <div>更新</div>-->
+<!--        </div>-->
         <div class="add-button-block" @click="clearPlanList">
             <img src="./assets/popup/clear-button.png" class="add-button-png" alt="">
             <div>清空</div>
